@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#1b2a24" />
+  <title>Hôtel Aurore — Escapade de lumière en Provence</title>
+  <meta name="description" content="Hôtel Aurore à Roussillon, en Provence. Chambres élégantes, jardins ocre, piscine chauffée et spa. Réservez votre parenthèse de douceur de vivre." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script>document.documentElement.classList.add("js");</script>
+
+  <style>
+    /* ---------- Design system ---------- */
+    :root {
+      --color-ink: #1b2a24;
+      --color-ink-soft: #2c3f35;
+      --color-cream: #faf7f1;
+      --color-sand: #efe7d9;
+      --color-paper: #ffffff;
+      --color-gold: #b08d57;
+      --color-gold-dark: #8a6d3b;
+      --color-text: #2a2e2a;
+      --color-muted: #6c726b;
+      --color-line: #e3ddd1;
+      --color-error: #a3342a;
+      --color-success: #2f6b4f;
+
+      --font-display: "Cormorant Garamond", Georgia, serif;
+      --font-body: "Inter", system-ui, -apple-system, sans-serif;
+
+      --space-1: 0.5rem;
+      --space-2: 0.75rem;
+      --space-3: 1rem;
+      --space-4: 1.5rem;
+      --space-5: 2rem;
+      --space-6: 3rem;
+      --space-7: 4.5rem;
+      --space-8: 6rem;
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --shadow-sm: 0 2px 10px rgba(27, 42, 36, 0.06);
+      --shadow-md: 0 14px 40px rgba(27, 42, 36, 0.14);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --container: 1200px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--color-text);
+      background: var(--color-cream);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.12; margin: 0; color: var(--color-ink); }
+    p { margin: 0; }
+    :focus-visible { outline: 3px solid var(--color-gold); outline-offset: 3px; border-radius: 2px; }
+
+    .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: 1.25rem; }
+    .section { padding-block: var(--space-7); }
+    .eyebrow {
+      display: inline-block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--color-gold-dark); margin-bottom: var(--space-3);
+    }
+    .section-title { font-size: clamp(2rem, 5vw, 3.2rem); }
+    .section-lead { color: var(--color-muted); max-width: 60ch; margin-top: var(--space-3); }
+    .center { text-align: center; }
+    .center .section-lead { margin-inline: auto; }
+    .skip-link {
+      position: absolute; left: -9999px; top: 0; background: var(--color-ink); color: #fff;
+      padding: 0.75rem 1rem; z-index: 100;
+    }
+    .skip-link:focus { left: 1rem; top: 1rem; }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      min-height: 48px; padding: 0.8rem 1.6rem; border: 1px solid transparent;
+      border-radius: var(--radius-sm); font-size: 0.95rem; font-weight: 600;
+      transition: transform 200ms var(--ease), background-color 200ms var(--ease), color 200ms var(--ease), box-shadow 200ms var(--ease);
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .btn:active { transform: translateY(0); }
+    .btn-gold { background: var(--color-gold); color: #fff; }
+    .btn-gold:hover { background: var(--color-gold-dark); }
+    .btn-outline { border-color: currentColor; background: transparent; }
+    .btn-dark { background: var(--color-ink); color: #fff; }
+    .btn-dark:hover { background: var(--color-ink-soft); }
+    .btn-block { width: 100%; }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      position: fixed; inset: 0 0 auto 0; z-index: 50;
+      padding-block: 1rem; transition: background-color 250ms var(--ease), box-shadow 250ms var(--ease), padding 250ms var(--ease);
+    }
+    .site-header.scrolled { background: var(--color-paper); box-shadow: var(--shadow-sm); padding-block: 0.6rem; }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .brand { display: flex; align-items: center; gap: 0.65rem; color: #fff; transition: color 250ms var(--ease); }
+    .scrolled .brand { color: var(--color-ink); }
+    .brand-mark {
+      width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid currentColor;
+      border-radius: 50%; font-family: var(--font-display); font-size: 1.35rem; line-height: 1;
+    }
+    .brand-name { font-family: var(--font-display); font-size: 1.4rem; font-weight: 600; line-height: 1; }
+    .brand-sub { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.8; }
+
+    .nav-toggle {
+      display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+      width: 44px; height: 44px; padding: 10px; background: transparent; border: 1px solid currentColor;
+      border-radius: var(--radius-sm); color: #fff;
+    }
+    .scrolled .nav-toggle { color: var(--color-ink); }
+    .nav-toggle span { height: 2px; width: 100%; background: currentColor; border-radius: 2px; transition: transform 200ms var(--ease), opacity 200ms var(--ease); }
+
+    .site-nav {
+      position: absolute; top: 100%; left: 1rem; right: 1rem;
+      display: none; flex-direction: column; gap: 0.25rem; padding: 1rem;
+      background: var(--color-paper); border-radius: var(--radius-md); box-shadow: var(--shadow-md);
+      color: var(--color-ink);
+    }
+    .site-nav.open { display: flex; }
+    .site-nav a { padding: 0.7rem 0.5rem; border-radius: var(--radius-sm); font-size: 0.95rem; font-weight: 500; }
+    .site-nav a:hover { background: var(--color-sand); }
+    .nav-cta { margin-top: 0.5rem; }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative; min-height: 100svh; display: flex; align-items: center;
+      color: #fff; overflow: hidden;
+      background: linear-gradient(135deg, #3a4a3f, #1b2a24);
+    }
+    .hero-media { position: absolute; inset: 0; }
+    .hero-media img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-media::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(15, 26, 21, 0.82) 0%, rgba(15, 26, 21, 0.45) 55%, rgba(15, 26, 21, 0.15) 100%);
+    }
+    .hero-content { position: relative; z-index: 2; padding-block: 8rem 12rem; max-width: 48rem; }
+    .hero .eyebrow { color: #e7cda3; }
+    .hero h1 { color: #fff; font-size: clamp(2.8rem, 8vw, 5.6rem); letter-spacing: -0.01em; }
+    .hero p { margin-top: var(--space-4); font-size: clamp(1rem, 2.2vw, 1.2rem); color: rgba(255, 255, 255, 0.88); max-width: 42ch; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: var(--space-5); }
+    .hero-actions .btn-outline { color: #fff; }
+
+    /* ---------- Booking bar ---------- */
+    .booking {
+      position: relative; z-index: 3; margin-top: -4.5rem; padding-bottom: var(--space-7);
+    }
+    .booking-card {
+      background: var(--color-paper); border-radius: var(--radius-md); box-shadow: var(--shadow-md);
+      padding: var(--space-4) var(--space-5);
+    }
+    .booking-head {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+      flex-wrap: wrap; margin-bottom: var(--space-4);
+    }
+    .booking-head h2 { font-size: 1.5rem; }
+    .booking-head span { font-size: 0.85rem; color: var(--color-muted); }
+    .booking-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+    .field { display: flex; flex-direction: column; gap: 0.35rem; }
+    .field label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-muted); }
+    .field input, .field select, .field textarea {
+      width: 100%; min-height: 48px; padding: 0.65rem 0.8rem; color: var(--color-text);
+      background: var(--color-cream); border: 1px solid var(--color-line); border-radius: var(--radius-sm);
+      transition: border-color 200ms var(--ease), box-shadow 200ms var(--ease);
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none; border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(176, 141, 87, 0.18);
+    }
+    .field textarea { min-height: 130px; resize: vertical; }
+    .field .error { font-size: 0.8rem; color: var(--color-error); min-height: 1em; }
+    .field.invalid input, .field.invalid select, .field.invalid textarea { border-color: var(--color-error); }
+    .form-note { margin-top: 0.75rem; font-size: 0.9rem; font-weight: 500; min-height: 1.4em; }
+    .form-note.success { color: var(--color-success); }
+    .form-note.error { color: var(--color-error); }
+
+    /* ---------- About ---------- */
+    .about-grid { display: grid; gap: var(--space-5); align-items: center; }
+    .about-figure { position: relative; }
+    .about-figure img { width: 100%; height: 100%; min-height: 320px; object-fit: cover; border-radius: var(--radius-md); }
+    .about-badge {
+      position: absolute; right: -0.5rem; bottom: -1rem; background: var(--color-gold); color: #fff;
+      padding: 1rem 1.25rem; border-radius: var(--radius-sm); box-shadow: var(--shadow-md);
+      font-family: var(--font-display); font-size: 1.1rem; line-height: 1.2; text-align: center;
+    }
+    .about-badge small { display: block; font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .about-copy p { color: var(--color-muted); margin-top: var(--space-3); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: var(--space-5); }
+    .stat strong { display: block; font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--color-ink); line-height: 1; }
+    .stat span { font-size: 0.8rem; color: var(--color-muted); }
+
+    /* ---------- Rooms ---------- */
+    .rooms { background: var(--color-sand); }
+    .rooms-grid { display: grid; gap: var(--space-4); margin-top: var(--space-6); }
+    .room-card {
+      background: var(--color-paper); border-radius: var(--radius-md); overflow: hidden;
+      box-shadow: var(--shadow-sm); transition: transform 300ms var(--ease), box-shadow 300ms var(--ease);
+      display: flex; flex-direction: column;
+    }
+    .room-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+    .room-media { overflow: hidden; aspect-ratio: 4 / 3; }
+    .room-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease); }
+    .room-card:hover .room-media img { transform: scale(1.05); }
+    .room-body { padding: var(--space-4); display: flex; flex-direction: column; flex: 1; }
+    .room-meta { font-size: 0.8rem; color: var(--color-gold-dark); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+    .room-body h3 { font-size: 1.7rem; margin-top: 0.35rem; }
+    .room-body p { color: var(--color-muted); font-size: 0.95rem; margin-top: 0.6rem; }
+    .room-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: auto; padding-top: var(--space-4); }
+    .price { font-family: var(--font-display); font-size: 1.6rem; color: var(--color-ink); }
+    .price span { font-family: var(--font-body); font-size: 0.8rem; color: var(--color-muted); }
+    .link-arrow { font-size: 0.9rem; font-weight: 600; color: var(--color-gold-dark); }
+    .link-arrow:hover { text-decoration: underline; }
+
+    /* ---------- Services ---------- */
+    .services-grid { display: grid; gap: var(--space-4); margin-top: var(--space-6); grid-template-columns: 1fr; }
+    .service { display: flex; gap: 1rem; align-items: flex-start; padding: var(--space-3); border-radius: var(--radius-md); transition: background-color 200ms var(--ease); }
+    .service > div { min-width: 0; }
+    .service:hover { background: var(--color-sand); }
+    .service-icon {
+      flex: 0 0 48px; height: 48px; display: grid; place-items: center; border-radius: 50%;
+      background: var(--color-sand); color: var(--color-gold-dark);
+    }
+    .service h3 { font-size: 1.2rem; }
+    .service p { font-size: 0.88rem; color: var(--color-muted); margin-top: 0.25rem; }
+
+    /* ---------- Gallery ---------- */
+    .gallery { background: var(--color-ink); color: #fff; }
+    .gallery .section-title { color: #fff; }
+    .gallery .section-lead { color: rgba(255,255,255,0.7); }
+    .gallery-grid { display: grid; gap: 0.75rem; margin-top: var(--space-6); grid-template-columns: repeat(2, 1fr); }
+    .gallery-item { position: relative; overflow: hidden; border-radius: var(--radius-sm); aspect-ratio: 1; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease), opacity 300ms var(--ease); }
+    .gallery-item:hover img { transform: scale(1.08); opacity: 0.85; }
+    .gallery-item figcaption {
+      position: absolute; inset: auto 0 0 0; padding: 1.5rem 0.75rem 0.75rem;
+      background: linear-gradient(transparent, rgba(15,26,21,0.8)); font-size: 0.85rem; font-weight: 500;
+    }
+
+    /* ---------- Testimonials ---------- */
+    .quotes-grid { display: grid; gap: var(--space-4); margin-top: var(--space-6); }
+    .quote { background: var(--color-paper); border: 1px solid var(--color-line); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-sm); }
+    .quote-stars { color: var(--color-gold); letter-spacing: 0.15em; }
+    .quote blockquote { font-family: var(--font-display); font-size: 1.35rem; line-height: 1.4; color: var(--color-ink); margin: var(--space-3) 0; }
+    .quote cite { font-style: normal; font-size: 0.85rem; color: var(--color-muted); }
+    .quote cite strong { display: block; color: var(--color-text); }
+
+    /* ---------- Contact ---------- */
+    .contact-grid { display: grid; gap: var(--space-6); }
+    .contact-info h3 { font-size: 1.5rem; }
+    .contact-list { list-style: none; padding: 0; margin: var(--space-4) 0 0; display: grid; gap: 1rem; }
+    .contact-list li { display: flex; gap: 0.85rem; align-items: flex-start; color: var(--color-muted); }
+    .contact-list strong { display: block; color: var(--color-text); font-size: 0.9rem; }
+    .contact-list .service-icon { flex-basis: 42px; height: 42px; }
+    .contact-form { background: var(--color-paper); border-radius: var(--radius-md); padding: var(--space-5); box-shadow: var(--shadow-sm); }
+    .contact-form .field { margin-bottom: var(--space-3); }
+
+    /* ---------- Footer ---------- */
+    .site-footer { background: var(--color-ink); color: rgba(255,255,255,0.75); padding-block: var(--space-7) var(--space-5); }
+    .footer-grid { display: grid; gap: var(--space-5); }
+    .footer-brand .brand { color: #fff; }
+    .footer-brand p { margin-top: var(--space-3); font-size: 0.9rem; max-width: 34ch; }
+    .footer-col h3 { color: #fff; font-family: var(--font-body); font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: var(--space-3); }
+    .footer-col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; font-size: 0.9rem; }
+    .footer-col a:hover { color: #e7cda3; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.12); margin-top: var(--space-6); padding-top: var(--space-4); display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: space-between; font-size: 0.82rem; }
+
+    /* ---------- Reveal animation ---------- */
+    .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
+    .js .reveal.visible { opacity: 1; transform: none; }
+
+    /* ---------- Breakpoints ---------- */
+    @media (min-width: 640px) {
+      .booking-grid { grid-template-columns: repeat(2, 1fr); }
+      .rooms-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+      .gallery-item:first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .quotes-grid { grid-template-columns: repeat(3, 1fr); }
+      .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
+    }
+
+    @media (min-width: 768px) {
+      .section { padding-block: var(--space-8); }
+      .nav-toggle { display: none; }
+      .site-nav {
+        position: static; display: flex; flex-direction: row; align-items: center; gap: 0.35rem;
+        background: transparent; box-shadow: none; padding: 0; color: #fff;
+      }
+      .site-nav a { padding: 0.5rem 0.7rem; }
+      .site-nav a:hover { background: rgba(255,255,255,0.12); }
+      .scrolled .site-nav { color: var(--color-ink); }
+      .scrolled .site-nav a:hover { background: var(--color-sand); }
+      .scrolled .nav-cta, .nav-cta { color: #fff; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr 1fr; }
+      .booking-grid { grid-template-columns: repeat(3, 1fr) auto; align-items: end; }
+      .booking-grid .btn { align-self: end; }
+    }
+
+    @media (min-width: 1024px) {
+      .rooms-grid { grid-template-columns: repeat(3, 1fr); }
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .js .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <!-- Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a class="brand" href="#accueil" aria-label="Hôtel Aurore, accueil">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>
+          <span class="brand-name">Hôtel Aurore</span>
+          <span class="brand-sub">Roussillon · Provence</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="site-nav" id="siteNav" aria-label="Navigation principale">
+        <a href="#decouvrir">L'hôtel</a>
+        <a href="#chambres">Chambres</a>
+        <a href="#services">Services</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#avis">Avis</a>
+        <a href="#contact">Contact</a>
+        <a href="#reserver" class="btn btn-gold nav-cta">Réserver</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" id="accueil" aria-labelledby="heroTitle">
+      <div class="hero-media">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=75"
+             alt="Piscine de l'hôtel au coucher du soleil en Provence" fetchpriority="high" />
+      </div>
+      <div class="container hero-content">
+        <span class="eyebrow">Hôtel Aurore · Roussillon</span>
+        <h1 id="heroTitle">Une parenthèse de lumière en Provence</h1>
+        <p>Élégance confidentielle, paysages ocre et douceur de vivre. Une adresse où le temps ralentit, au cœur du Luberon.</p>
+        <div class="hero-actions">
+          <a href="#chambres" class="btn btn-gold">Découvrir nos chambres</a>
+          <a href="#reserver" class="btn btn-outline">Réserver un séjour</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking -->
+    <section class="booking" id="reserver" aria-labelledby="bookingTitle">
+      <div class="container">
+        <div class="booking-card reveal">
+          <div class="booking-head">
+            <h2 id="bookingTitle">Réservez votre séjour</h2>
+            <span>Meilleur tarif garanti sur notre site</span>
+          </div>
+          <form id="bookingForm" novalidate>
+            <div class="booking-grid">
+              <div class="field" id="f-arrivee">
+                <label for="arrivee">Arrivée</label>
+                <input type="date" id="arrivee" name="arrivee" required aria-describedby="err-arrivee" />
+                <span class="error" id="err-arrivee" aria-live="polite"></span>
+              </div>
+              <div class="field" id="f-depart">
+                <label for="depart">Départ</label>
+                <input type="date" id="depart" name="depart" required aria-describedby="err-depart" />
+                <span class="error" id="err-depart" aria-live="polite"></span>
+              </div>
+              <div class="field" id="f-voyageurs">
+                <label for="voyageurs">Voyageurs</label>
+                <select id="voyageurs" name="voyageurs" required aria-describedby="err-voyageurs">
+                  <option value="1">1 personne</option>
+                  <option value="2" selected>2 personnes</option>
+                  <option value="3">3 personnes</option>
+                  <option value="4">4 personnes</option>
+                </select>
+                <span class="error" id="err-voyageurs" aria-live="polite"></span>
+              </div>
+              <button type="submit" class="btn btn-dark btn-block">Vérifier les disponibilités</button>
+            </div>
+            <p class="form-note" id="bookingNote" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section" id="decouvrir" aria-labelledby="aboutTitle">
+      <div class="container about-grid">
+        <div class="about-figure reveal">
+          <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1000&q=75"
+               alt="Terrasse ombragée de l'hôtel surplombant la vallée" loading="lazy" />
+          <div class="about-badge"><small>Depuis</small>1908</div>
+        </div>
+        <div class="about-copy reveal">
+          <span class="eyebrow">Notre maison</span>
+          <h2 class="section-title" id="aboutTitle">Un refuge pensé pour vous</h2>
+          <p>Ancienne demeure de vigneron restaurée avec soin, l'Hôtel Aurore conjugue le charme de la pierre provençale et le confort contemporain. Chaque recoin raconte une histoire, chaque fenêtre ouvre sur la lumière du Luberon.</p>
+          <p>Nos douze chambres, toutes singulières, invitent à la pause. Au petit matin, le parfum du pain frais et des plantes aromatiques vous accueille sur la terrasse.</p>
+          <div class="stats">
+            <div class="stat"><strong>12</strong><span>chambres singulières</span></div>
+            <div class="stat"><strong>4 ha</strong><span>de jardins &amp; vergers</span></div>
+            <div class="stat"><strong>9,4/10</strong><span>avis voyageurs</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rooms -->
+    <section class="section rooms" id="chambres" aria-labelledby="roomsTitle">
+      <div class="container">
+        <div class="center reveal">
+          <span class="eyebrow">Hébergement</span>
+          <h2 class="section-title" id="roomsTitle">Nos chambres &amp; suites</h2>
+          <p class="section-lead">Des espaces intimes et lumineux, où chaque détail a été choisi pour votre bien-être.</p>
+        </div>
+        <div class="rooms-grid">
+          <article class="room-card reveal">
+            <div class="room-media">
+              <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=75"
+                   alt="Chambre Classique avec lit double et lumière douce" loading="lazy" />
+            </div>
+            <div class="room-body">
+              <span class="room-meta">25 m² · 2 personnes</span>
+              <h3>Chambre Classique</h3>
+              <p>Raffinée et cosy, elle offre une vue sur le jardin et une salle de bain en pierre.</p>
+              <div class="room-footer">
+                <span class="price">180 € <span>/ nuit</span></span>
+                <a href="#reserver" class="link-arrow">Réserver →</a>
+              </div>
+            </div>
+          </article>
+          <article class="room-card reveal">
+            <div class="room-media">
+              <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=75"
+                   alt="Chambre Supérieure lumineuse avec vue sur le jardin" loading="lazy" />
+            </div>
+            <div class="room-body">
+              <span class="room-meta">35 m² · 2 personnes</span>
+              <h3>Chambre Supérieure</h3>
+              <p>Un espace généreux, un balcon privatif et la lumière provençale du matin au soir.</p>
+              <div class="room-footer">
+                <span class="price">245 € <span>/ nuit</span></span>
+                <a href="#reserver" class="link-arrow">Réserver →</a>
+              </div>
+            </div>
+          </article>
+          <article class="room-card reveal">
+            <div class="room-media">
+              <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=75"
+                   alt="Suite Panorama avec vue sur les monts du Luberon" loading="lazy" />
+            </div>
+            <div class="room-body">
+              <span class="room-meta">55 m² · 3 personnes</span>
+              <h3>Suite Panorama</h3>
+              <p>Notre suite signature : salon, baignoire îlot et vue imprenable sur les monts du Luberon.</p>
+              <div class="room-footer">
+                <span class="price">320 € <span>/ nuit</span></span>
+                <a href="#reserver" class="link-arrow">Réserver →</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section" id="services" aria-labelledby="servicesTitle">
+      <div class="container">
+        <div class="center reveal">
+          <span class="eyebrow">Les plaisirs de l'hôtel</span>
+          <h2 class="section-title" id="servicesTitle">Services &amp; prestations</h2>
+          <p class="section-lead">Tout ce qu'il faut pour ne rien avoir à faire, sinon profiter.</p>
+        </div>
+        <div class="services-grid">
+          <div class="service reveal">
+            <span class="service-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2V16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M7 10.5V7a5 5 0 0 1 10 0v3.5"/></svg>
+            </span>
+            <div><h3>Wi-Fi haut débit</h3><p>Une connexion rapide et gratuite partout dans l'établissement.</p></div>
+          </div>
+          <div class="service reveal">
+            <span class="service-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16v3a6 6 0 0 1-6 6h-4a6 6 0 0 1-6-6z"/><path d="M20 11h1a2 2 0 0 1 0 4h-1"/><path d="M7 4v3M11 3v4M15 4v3"/></svg>
+            </span>
+            <div><h3>Petit-déjeuner bio</h3><p>Produits locaux, pains maison et jus frais servis jusqu'à 10 h.</p></div>
+          </div>
+          <div class="service reveal">
+            <span class="service-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 15c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/><path d="M2 19c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/><path d="M6 13V6a2 2 0 0 1 2-2h1v11"/></svg>
+            </span>
+            <div><h3>Piscine chauffée</h3><p>Un bassin d'eau de source, ouvert d'avril à octobre.</p></div>
+          </div>
+          <div class="service reveal">
+            <span class="service-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-3 3-4 6-4 9a4 4 0 0 0 8 0c0-3-1-6-4-9z"/><path d="M12 21v-6"/></svg>
+            </span>
+            <div><h3>Spa &amp; massages</h3><p>Soins aux huiles essentielles et hammam sur réservation.</p></div>
+          </div>
+          <div class="service reveal">
+            <span class="service-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 5.5 4 9s-1.5 6.5-4 9c-2.5-2.5-4-5.5-4-9s1.5-6.5 4-9z"/></svg>
+            </span>
+            <div><h3>Terrasse panoramique</h3><p>Un coucher de soleil inoubliable sur les vignes et le village.</p></div>
+          </div>
+          <div class="service reveal">
+            <span class="service-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6 17v2M18 17v2"/><path d="M4 13h16l-2-5H6z"/><path d="M8 8V5h8v3"/></svg>
+            </span>
+            <div><h3>Parking privé</h3><p>Stationnement sécurisé et bornes de recharge pour véhicules électriques.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="section gallery" id="galerie" aria-labelledby="galleryTitle">
+      <div class="container">
+        <div class="center reveal">
+          <span class="eyebrow">En images</span>
+          <h2 class="section-title" id="galleryTitle">L'âme de la maison</h2>
+          <p class="section-lead">Quelques instants volés entre pierre, lumière et nature.</p>
+        </div>
+        <div class="gallery-grid">
+          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=900&q=75" alt="Façade de l'hôtel baignée de lumière" loading="lazy" /><figcaption>La façade au levant</figcaption></figure>
+          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=700&q=75" alt="Espace détente et salon de l'hôtel" loading="lazy" /><figcaption>Le salon de lecture</figcaption></figure>
+          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=700&q=75" alt="Piscine entourée de verdure" loading="lazy" /><figcaption>Le bassin</figcaption></figure>
+          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=700&q=75" alt="Salle de bain en pierre naturelle" loading="lazy" /><figcaption>Pierre &amp; lumière</figcaption></figure>
+          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=700&q=75" alt="Table dressée pour le dîner" loading="lazy" /><figcaption>La table d'hôtes</figcaption></figure>
+          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=700&q=75" alt="Coucher de soleil sur les collines provençales" loading="lazy" /><figcaption>Coucher de soleil</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section" id="avis" aria-labelledby="avisTitle">
+      <div class="container">
+        <div class="center reveal">
+          <span class="eyebrow">Ils en parlent</span>
+          <h2 class="section-title" id="avisTitle">L'avis de nos hôtes</h2>
+        </div>
+        <div class="quotes-grid">
+          <figure class="quote reveal">
+            <div class="quote-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+            <blockquote>« Un lieu hors du temps. Le petit-déjeuner sur la terrasse face aux vignes restera notre meilleur souvenir de Provence. »</blockquote>
+            <figcaption><cite><strong>Claire &amp; Julien</strong>Paris · séjour de 3 nuits</cite></figcaption>
+          </figure>
+          <figure class="quote reveal">
+            <div class="quote-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+            <blockquote>« Accord parfait entre le charme de l'ancien et le confort moderne. L'équipe est aux petits soins, sans jamais être envahissante. »</blockquote>
+            <figcaption><cite><strong>Margot L.</strong>Lyon · suite Panorama</cite></figcaption>
+          </figure>
+          <figure class="quote reveal">
+            <div class="quote-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+            <blockquote>« Nous sommes venus pour deux nuits, nous sommes restés une semaine. La piscine et le calme du jardin sont irrésistibles. »</blockquote>
+            <figcaption><cite><strong>Thomas R.</strong>Bordeaux · chambre Supérieure</cite></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section rooms" id="contact" aria-labelledby="contactTitle">
+      <div class="container contact-grid">
+        <div class="contact-info reveal">
+          <span class="eyebrow">Nous trouver</span>
+          <h2 class="section-title" id="contactTitle">Contact &amp; accès</h2>
+          <ul class="contact-list">
+            <li>
+              <span class="service-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <span><strong>Adresse</strong>7 chemin des Oliviers, 84220 Roussillon, France</span>
+            </li>
+            <li>
+              <span class="service-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg></span>
+              <span><strong>Téléphone</strong>+33 (0)4 90 05 12 08</span>
+            </li>
+            <li>
+              <span class="service-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span>
+              <span><strong>E-mail</strong>bonjour@hotel-aurore.fr</span>
+            </li>
+            <li>
+              <span class="service-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+              <span><strong>Réception</strong>7 h – 22 h, tous les jours</span>
+            </li>
+          </ul>
+        </div>
+
+        <form class="contact-form reveal" id="contactForm" novalidate>
+          <h3>Écrivez-nous</h3>
+          <div class="field" id="f-nom">
+            <label for="nom">Nom complet</label>
+            <input type="text" id="nom" name="nom" autocomplete="name" required aria-describedby="err-nom" />
+            <span class="error" id="err-nom" aria-live="polite"></span>
+          </div>
+          <div class="field" id="f-email">
+            <label for="email">Adresse e-mail</label>
+            <input type="email" id="email" name="email" autocomplete="email" required aria-describedby="err-email" />
+            <span class="error" id="err-email" aria-live="polite"></span>
+          </div>
+          <div class="field" id="f-message">
+            <label for="message">Votre message</label>
+            <textarea id="message" name="message" required aria-describedby="err-message"></textarea>
+            <span class="error" id="err-message" aria-live="polite"></span>
+          </div>
+          <button type="submit" class="btn btn-dark btn-block">Envoyer le message</button>
+          <p class="form-note" id="contactNote" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand"><span class="brand-mark" aria-hidden="true">A</span><span><span class="brand-name">Hôtel Aurore</span><span class="brand-sub">Roussillon · Provence</span></span></div>
+          <p>Une maison de charme au cœur du Luberon, où chaque saison invite à ralentir et à savourer.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Découvrir</h3>
+          <ul>
+            <li><a href="#decouvrir">L'hôtel</a></li>
+            <li><a href="#chambres">Chambres &amp; suites</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#galerie">Galerie</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Informations</h3>
+          <ul>
+            <li><a href="#contact">Nous contacter</a></li>
+            <li><a href="#reserver">Réserver</a></li>
+            <li><a href="#avis">Avis clients</a></li>
+            <li><a href="#contact">Accès &amp; parking</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Hôtel Aurore. Tous droits réservés.</span>
+        <span>Fait avec soin en Provence · Mentions légales</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var header = document.getElementById("siteHeader");
+      var navToggle = document.getElementById("navToggle");
+      var nav = document.getElementById("siteNav");
+
+      // Header state on scroll
+      function onScroll() { header.classList.toggle("scrolled", window.scrollY > 40); }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      // Mobile menu
+      navToggle.addEventListener("click", function () {
+        var open = nav.classList.toggle("open");
+        navToggle.setAttribute("aria-expanded", String(open));
+        navToggle.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
+      });
+      nav.addEventListener("click", function (e) {
+        if (e.target.closest("a")) {
+          nav.classList.remove("open");
+          navToggle.setAttribute("aria-expanded", "false");
+          navToggle.setAttribute("aria-label", "Ouvrir le menu");
+        }
+      });
+
+      // Reveal on scroll
+      var reveals = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) { entry.target.classList.add("visible"); io.unobserve(entry.target); }
+          });
+        }, { threshold: 0.12 });
+        reveals.forEach(function (el) { io.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add("visible"); });
+      }
+
+      // Field validation helper
+      function setError(fieldId, errorId, message) {
+        var field = document.getElementById(fieldId);
+        var err = document.getElementById(errorId);
+        err.textContent = message || "";
+        field.classList.toggle("invalid", Boolean(message));
+      }
+
+      // Booking form
+      var bookingForm = document.getElementById("bookingForm");
+      var bookingNote = document.getElementById("bookingNote");
+      var today = new Date().toISOString().split("T")[0];
+      document.getElementById("arrivee").min = today;
+      document.getElementById("depart").min = today;
+
+      bookingForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        bookingNote.textContent = "";
+        bookingNote.className = "form-note";
+
+        var arrivee = document.getElementById("arrivee").value;
+        var depart = document.getElementById("depart").value;
+        var voyageurs = document.getElementById("voyageurs").value;
+        var ok = true;
+
+        setError("f-arrivee", "err-arrivee", "");
+        setError("f-depart", "err-depart", "");
+        setError("f-voyageurs", "err-voyageurs", "");
+
+        if (!arrivee) { setError("f-arrivee", "err-arrivee", "Choisissez une date d'arrivée."); ok = false; }
+        if (!depart) { setError("f-depart", "err-depart", "Choisissez une date de départ."); ok = false; }
+        else if (arrivee && depart <= arrivee) { setError("f-depart", "err-depart", "Le départ doit être après l'arrivée."); ok = false; }
+        if (!voyageurs) { setError("f-voyageurs", "err-voyageurs", "Indiquez le nombre de voyageurs."); ok = false; }
+
+        if (!ok) return;
+
+        bookingNote.textContent = "Merci ! Nous vérifions les disponibilités pour " + voyageurs + (voyageurs === "1" ? " voyageur" : " voyageurs") + " du " + arrivee + " au " + depart + ". Nous vous recontactons par e-mail.";
+        bookingNote.className = "form-note success";
+        bookingForm.reset();
+      });
+
+      // Contact form
+      var contactForm = document.getElementById("contactForm");
+      var contactNote = document.getElementById("contactNote");
+      contactForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        contactNote.textContent = "";
+        contactNote.className = "form-note";
+
+        var nom = document.getElementById("nom").value.trim();
+        var email = document.getElementById("email").value.trim();
+        var message = document.getElementById("message").value.trim();
+        var ok = true;
+
+        setError("f-nom", "err-nom", "");
+        setError("f-email", "err-email", "");
+        setError("f-message", "err-message", "");
+
+        if (!nom) { setError("f-nom", "err-nom", "Indiquez votre nom."); ok = false; }
+        if (!email) { setError("f-email", "err-email", "Indiquez votre adresse e-mail."); ok = false; }
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setError("f-email", "err-email", "Adresse e-mail invalide."); ok = false; }
+        if (!message) { setError("f-message", "err-message", "Écrivez votre message."); ok = false; }
+
+        if (!ok) return;
+
+        contactNote.textContent = "Merci " + nom + " ! Votre message a bien été envoyé. Nous vous répondrons sous 24 h.";
+        contactNote.className = "form-note success";
+        contactForm.reset();
+      });
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>
